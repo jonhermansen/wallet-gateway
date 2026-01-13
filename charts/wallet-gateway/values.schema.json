@@ -33,6 +33,9 @@
                         "port": {
                             "type": "integer"
                         },
+                        "requestSizeLimit": {
+                            "type": "string"
+                        },
                         "userPath": {
                             "type": "string"
                         }
@@ -157,7 +160,8 @@
                         "port",
                         "dappPath",
                         "userPath",
-                        "allowedOrigins"
+                        "allowedOrigins",
+                        "requestSizeLimit"
                     ],
                     "properties": {
                         "allowedOrigins": {
@@ -188,6 +192,11 @@
                             "description": "The port on which the NodeJS service will listen. Defaults to 3030.",
                             "default": 3030,
                             "type": "number"
+                        },
+                        "requestSizeLimit": {
+                            "description": "The maximum size of incoming requests. Defaults to 1mb.",
+                            "default": "1mb",
+                            "type": "string"
                         },
                         "tls": {
                             "description": "Deprecated, this option no longer has any effect. Will be removed in a future release.",
