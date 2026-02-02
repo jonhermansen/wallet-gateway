@@ -198,8 +198,8 @@
                             "type": "number"
                         },
                         "requestRateLimit": {
-                            "description": "The maximum number of requests per minute from a single IP address. Defaults to 100.",
-                            "default": 100,
+                            "description": "The maximum number of requests per minute from a single IP address. Defaults to 10000.",
+                            "default": 10000,
                             "type": "number"
                         },
                         "requestSizeLimit": {
