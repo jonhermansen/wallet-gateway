@@ -82,7 +82,7 @@ tags_unstable+=("$(full-tag "${REGISTRY_UNSTABLE}" "${sanitize_branch_name}")")
 # Check if we are on a release branch
 is_release_branch=false
 for branch in ${RELEASE_BRANCHES}; do
-  if [ "${GITHUB_REF_NAME}" == "${branch}" ]; then
+  if [[ "${GITHUB_REF_NAME}" == ${branch} ]]; then
     is_release_branch=true
     echo "Release branch detected: ${GITHUB_REF_NAME}"
     break

@@ -19,7 +19,7 @@ inputs:
     required: false
   release-branches:
     description: List of branche names considered for stable releases (space separated)
-    default: main master release- release/
+    default: main master release-* release/*
     required: false
 
 outputs:
