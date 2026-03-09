@@ -1,4 +1,4 @@
-FROM node:alpine AS builder
+FROM europe-docker.pkg.dev/da-images/public-unstable/docker/da-base-image:node AS builder
 WORKDIR /app
 ARG version=REQUIRED
 RUN npm install "@canton-network/example-portfolio@${version}"
