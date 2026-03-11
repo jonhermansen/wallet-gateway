@@ -84,6 +84,9 @@
                                 "database": {
                                     "type": "string"
                                 },
+                                "instanceID": {
+                                    "type": "string"
+                                },
                                 "type": {
                                     "type": "string"
                                 }
@@ -107,6 +110,9 @@
         "image": {
             "type": "object",
             "properties": {
+                "cloudSqlProxyImage": {
+                    "type": "string"
+                },
                 "repo": {
                     "type": "string"
                 },

@@ -47,3 +47,15 @@ spec:
         - name: config
           configMap:
             name: "{{ .Release.Name }}-wallet-gateway-config"
+      {{- if .Values.config.store.instanceID }}
+      initContainers:
+        - args:
+            - --auto-iam-authn
+            - --private-ip
+            - --structured-logs
+            - {{ .Values.config.store.instanceID }}
+          image: "{{ .Values.image.cloudSqlProxyImage }}"
+          name: proxy
+          restartPolicy: Always
+      {{- end }}
+      
