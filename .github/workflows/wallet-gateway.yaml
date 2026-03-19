@@ -11,7 +11,7 @@ jobs:
     runs-on: digital-asset-wallet-gateway
     steps:
       - uses: actions/checkout@v6
-      - run: helm unittest charts/wallet-gateway
+      - run: helm unittest apps/wallet-gateway/chart
       - run: ./bin/helm-gen wallet-gateway
       - run: ./.github/scripts/git-dirty-check
 
@@ -89,7 +89,7 @@ jobs:
       - name: Helm Build and Publish
         uses: ./.github/actions/helm-build-push
         with:
-          chart: charts/wallet-gateway
+          chart: apps/wallet-gateway/chart
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry-unstable: ghcr.io/digital-asset/wallet-gateway-unstable/helm

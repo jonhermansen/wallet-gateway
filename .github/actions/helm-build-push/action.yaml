@@ -47,7 +47,7 @@ runs:
     - name: Helm Build and Push
       id: build-push
       env:
-        CHART: charts/${{ inputs.name }}
+        CHART: apps/${{ inputs.name }}/chart
         REGISTRY_UNSTABLE: ${{ inputs.registry-unstable }}
         REGISTRY_STABLE: ${{ inputs.registry-stable }}
         RELEASE_BRANCHES: ${{ inputs.release-branches }}

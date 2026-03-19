@@ -11,7 +11,7 @@ jobs:
     runs-on: digital-asset-wallet-gateway
     steps:
       - uses: actions/checkout@v6
-      - run: helm unittest charts/splice-portfolio
+      - run: helm unittest apps/splice-portfolio/chart
       - run: ./bin/helm-gen splice-portfolio
       - run: ./.github/scripts/git-dirty-check
 
@@ -76,7 +76,7 @@ jobs:
       - name: Helm Build and Publish
         uses: ./.github/actions/helm-build-push
         with:
-          chart: charts/splice-portfolio
+          chart: apps/splice-portfolio/chart
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry-unstable: ghcr.io/digital-asset/splice-portfolio-unstable/helm

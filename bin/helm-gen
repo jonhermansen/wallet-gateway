@@ -15,11 +15,11 @@ set -x
 if [ "${chart}" == 'wallet-gateway' ]; then
     version="$(<"${repo_root}/apps/wallet-gateway/VERSION")"
 
-    npx --yes "@canton-network/wallet-gateway-remote@${version}" --config-schema >"${repo_root}/charts/wallet-gateway/config.schema.json"
+    npx --yes "@canton-network/wallet-gateway-remote@${version}" --config-schema >"${repo_root}/apps/wallet-gateway/chart/config.schema.json"
 fi
 
 helm schema \
     --bundle \
     --no-additional-properties \
-    --values "${repo_root}/charts/${chart}/values.yaml" \
-    -o "${repo_root}/charts/${chart}/values.schema.json"
+    --values "${repo_root}/apps/${chart}/chart/values.yaml" \
+    -o "${repo_root}/apps/${chart}/chart/values.schema.json"
