@@ -21,6 +21,43 @@ spec:
         - name: wallet-gateway
           image: "{{ .Values.image.repo }}/wallet-gateway:{{  .Values.image.tag | default (printf "v%s" .Chart.Version) }}"
           imagePullPolicy: Always
+          env:
+            {{- /* FIREBLOCKS env vars */ -}}
+            {{- if and .Values.signing .Values.signing.fireblocks }}
+            - name: FIREBLOCKS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  {{- toYaml .Values.signing.fireblocks.apiKeyRef | nindent 18 }}
+
+            - name: FIREBLOCKS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  {{- toYaml .Values.signing.fireblocks.secretRef | nindent 18 }}
+            {{- end }}
+
+            {{- /* BLOCKDAEMON env vars */ -}}
+            {{- if and .Values.signing .Values.signing.blockdaemon }}
+            - name: BLOCKDAEMON_API_URL
+              value: {{ .Values.signing.blockdaemon.apiUrl | quote }}
+
+            - name: BLOCKDAEMON_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  {{- toYaml .Values.signing.blockdaemon.apiKeyRef | nindent 18 }}
+            {{- end }}
+
+            {{- /* dynamic env vars for oauth2 client secrets from bootstrap networks */ -}}
+            {{- range .Values.config.bootstrap.networks }}
+              {{- /* Create a list of the two auth blocks to check both */ -}}
+              {{- $authBlocks := list .auth .adminAuth -}}
+              {{- range $authBlocks }}
+                {{- if .clientSecretEnv }}
+                  {{- /* Pass 'root' as $ (global context) and the name of the env var */ -}}
+                  {{- include "wallet-gateway.render.secretEnv" (dict "root" $ "envName" .clientSecretEnv) | nindent 12 }}
+                {{- end }}
+              {{- end }}
+            {{- end }}
+
           ports:
             - name: http
               containerPort: {{ .Values.config.server.port }}

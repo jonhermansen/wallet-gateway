@@ -29,11 +29,35 @@ tests:
           count: 1
 
   - it: should render a deployment
+    set:
+      oauthSecrets.OAUTH2_DEVNET_CLIENT_SECRET.secretRef.name: "my-secret"
+      oauthSecrets.OAUTH2_DEVNET_CLIENT_SECRET.secretRef.key: "my-key"
     templates:
       - deployment.yaml
     asserts:
       - isKind:
           of: Deployment
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BLOCKDAEMON_API_URL
+            value: http://localhost:5080/api/cwp/canton
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BLOCKDAEMON_API_KEY
+            valueFrom:
+              secretKeyRef:
+                key: ""
+                name: ""
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: OAUTH2_DEVNET_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: "my-secret"
+                key: "my-key"
   - it: should render a service
     templates:
       - service.yaml
@@ -51,8 +75,38 @@ tests:
           value: |
             {
               "bootstrap": {
-                "idps": [],
-                "networks": []
+                "idps": [
+                  {
+                    "configUrl": "http://oauth.example.com/.well-known/openid-configuration",
+                    "id": "idp-devnet",
+                    "issuer": "\u003coauth_issuer\u003e",
+                    "type": "oauth"
+                  }
+                ],
+                "networks": [
+                  {
+                    "adminAuth": {
+                      "audience": "\u003coauth_audience\u003e",
+                      "clientId": "\u003coauth_admin_client_id\u003e",
+                      "clientSecretEnv": "OAUTH2_DEVNET_CLIENT_SECRET",
+                      "method": "client_credentials",
+                      "scope": "daml_ledger_api"
+                    },
+                    "auth": {
+                      "audience": "\u003coauth_audience\u003e",
+                      "clientId": "\u003coauth_user\u003e",
+                      "method": "authorization_code",
+                      "scope": "openid daml_ledger_api offline_access"
+                    },
+                    "description": "Connect to Canton DevNet",
+                    "id": "devnet",
+                    "identityProviderId": "idp-devnet",
+                    "ledgerApi": {
+                      "baseUrl": "https://devnet.example.com"
+                    },
+                    "name": "Canton DevNet (example)"
+                  }
+                ]
               },
               "kernel": {
                 "clientType": "remote",
