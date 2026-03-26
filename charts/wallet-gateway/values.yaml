@@ -64,3 +64,23 @@ config:
           clientId: "<oauth_admin_client_id>"
           # should correlate to a secret provided in oauthSecrets
           clientSecretEnv: "OAUTH2_DEVNET_CLIENT_SECRET"
+      - id: "local"
+        name: "Local (self-signed example)"
+        description: "Local development with self-signed IDP"
+        identityProviderId: "idp-local"
+        ledgerApi:
+          baseUrl: "http://localhost:3975"
+        auth:
+          method: "self_signed"
+          issuer: "unsafe-auth"
+          clientId: "<local_user>"
+          clientSecret: "unsafe"
+          scope: "openid daml_ledger_api offline_access"
+          audience: "<local_audience>"
+        adminAuth:
+          method: "self_signed"
+          issuer: "unsafe-auth"
+          clientId: "admin"
+          clientSecret: "unsafe"
+          scope: "openid daml_ledger_api offline_access"
+          audience: "<local_audience>"

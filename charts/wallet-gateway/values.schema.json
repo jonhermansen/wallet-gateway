@@ -44,7 +44,13 @@
                                             "clientId": {
                                                 "type": "string"
                                             },
+                                            "clientSecret": {
+                                                "type": "string"
+                                            },
                                             "clientSecretEnv": {
+                                                "type": "string"
+                                            },
+                                            "issuer": {
                                                 "type": "string"
                                             },
                                             "method": {
@@ -63,6 +69,12 @@
                                                 "type": "string"
                                             },
                                             "clientId": {
+                                                "type": "string"
+                                            },
+                                            "clientSecret": {
+                                                "type": "string"
+                                            },
+                                            "issuer": {
                                                 "type": "string"
                                             },
                                             "method": {
