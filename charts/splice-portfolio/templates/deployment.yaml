@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: splice-portfolio
-          image: "{{ .Values.image.repo }}/splice-portfolio:{{  .Values.image.tag | default (printf "v%s" .Chart.Version) }}"
+          image: "{{ .Values.image.repo }}/splice-portfolio:{{  .Values.image.tag | default .Chart.Version }}"
           imagePullPolicy: Always
           ports:
             - name: http
